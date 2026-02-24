@@ -1,0 +1,1 @@
+export { PromoCarousel } from "./ui/PromoCarousel";
