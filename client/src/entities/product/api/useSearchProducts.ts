@@ -1,6 +1,5 @@
 import { queryOptions , keepPreviousData } from "@tanstack/react-query";
 
-import { BASE_URLS } from "@/shared/api";
 import { ApiError } from "@/shared/api";
 
 import { type ProductResponse } from "../model/types";
@@ -9,7 +8,7 @@ const searchProducts = async (query: string , signal: AbortSignal): Promise<Prod
 
     const combinedSignal = AbortSignal.any([signal , AbortSignal.timeout(8000)])
 
-    const response = await fetch(`${BASE_URLS.dummy}/products/search?q=${query}` , {signal: combinedSignal})
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/products/search?q=${query}` , {signal: combinedSignal})
 
     if (!response.ok) {
         let message = "Server error"
