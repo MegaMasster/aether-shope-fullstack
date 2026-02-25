@@ -39,7 +39,7 @@ export const SearchInput = () => {
 
     const isSearchEnabled = safeDeboucedQuery.trim().length >= 2;
 
-    const {data , isPending , isFetching} = useQuery({
+    const {data , isPending , isFetching } = useQuery({
         ...searchProductsOptions(safeDeboucedQuery) , 
         enabled: safeDeboucedQuery.trim().length >= 2
     })
@@ -72,6 +72,7 @@ export const SearchInput = () => {
                 isVisible = {isFocused}
                 isPending = {isPending && isSearchEnabled}
                 isFetching={isFetching}
+                safeDeboucedQuery={safeDeboucedQuery}
             />
 
         </form>

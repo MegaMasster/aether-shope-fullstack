@@ -1,15 +1,16 @@
 import { Clock } from "lucide-react";
 import { type Product } from "@/entities/product"
-import { Search } from "lucide-react";
+import { Search , SearchX } from "lucide-react";
 
 interface Props {
     products: Product[];
     isVisible: boolean; 
     isPending: boolean;
     isFetching: boolean;
+    safeDeboucedQuery: string;
 }
 
-export const SearchSuggestions = ({products , isVisible , isPending , isFetching} : Props) => {
+export const SearchSuggestions = ({products , isVisible , isPending , isFetching , safeDeboucedQuery } : Props) => {
 
     if (!isVisible) return null;
 
@@ -70,6 +71,13 @@ export const SearchSuggestions = ({products , isVisible , isPending , isFetching
                                     Searching...
                                 </span>
                             </div>
+                        ) : safeDeboucedQuery.length >= 2 && !isFetching ? (  
+                            <>
+                                <SearchX size={18} strokeWidth={1.2} className="text-zinc-400" />
+                                <p className="text-zinc-500 font-light text-[11px] uppercase tracking-[0.25em]">
+                                    No results found
+                                </p>
+                            </>
                         ) : (
                             <>
                                 <Clock size={18} strokeWidth={1.2} className="text-zinc-400" />
