@@ -1,22 +1,22 @@
 import { Clock } from "lucide-react";
 import { type Product } from "@/entities/product"
 import { Search } from "lucide-react";
-import { div } from "framer-motion/client";
 
 interface Props {
     products: Product[];
     isVisible: boolean; 
-    isLoading: boolean;
+    isPending: boolean;
+    isFetching: boolean;
 }
 
-export const SearchSuggestions = ({products , isVisible , isLoading} : Props) => {
+export const SearchSuggestions = ({products , isVisible , isPending , isFetching} : Props) => {
 
     if (!isVisible) return null;
 
     return (
         <>
             {products.length > 0 ? (
-                <div className="absolute top-full left-0 right-0 mt-3 p-2
+                <div className="absolute top-full left-0 right-0 mt-3 p-2 
                     bg-gradient-to-br from-white/40 via-zinc-200/20 to-white/30 
                     backdrop-blur-3xl border border-white/30 rounded-[32px]
                     shadow-[0_20px_50px_-15px_rgba(0,0,0,0.1)]
@@ -27,8 +27,12 @@ export const SearchSuggestions = ({products , isVisible , isLoading} : Props) =>
                         {products.slice(0, 6).map((product) => (
                             <div
                                 key={product.id}
-                                className="group flex items-center justify-between px-6 py-3 
-                                hover:bg-white/50 rounded-[22px] transition-all duration-300 cursor-pointer"
+                                className={`group flex items-center justify-between px-6 py-3 
+                                hover:bg-white/50 rounded-[22px] transition-all duration-300 cursor-pointer
+                                ${isFetching 
+                                    ? 'animate-pulse bg-white/5 pointer-events-none' 
+                                    : 'opacity-100'
+                                }`}
                             >
                                 <div className="flex flex-col">
                                     <span className="text-zinc-700 font-light tracking-wide text-sm group-hover:text-zinc-900 transition-colors">
@@ -56,7 +60,7 @@ export const SearchSuggestions = ({products , isVisible , isLoading} : Props) =>
                 >
                     <div className="w-full h-full flex flex-col items-center justify-center gap-2 opacity-60">
                         
-                        {isLoading ? (
+                        {isPending ? (
                             <div className="flex flex-col items-center gap-2">
                                 <div className="relative flex items-center justify-center">
                                     <div className="w-5 h-5 border-t-2 border-zinc-400 border-solid rounded-full animate-spin"></div>
@@ -75,6 +79,7 @@ export const SearchSuggestions = ({products , isVisible , isLoading} : Props) =>
                             </>
                         )}
                     </div>
+
                 </div>
             )}
         </>

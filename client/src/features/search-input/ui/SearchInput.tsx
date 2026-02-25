@@ -16,19 +16,32 @@ export const SearchInput = () => {
     const [isFocused, setIsFocused] = useState(false);
 
     const { register , watch } = useForm<SearchInput>({
-        defaultValues: {
-            searchQuery: ""
-        }
+        
     });
-    
+
+//     const renderContent = () => {
+//     if (isLoading) return <Loader />; // 1. Загрузка
+//     if (products.length > 0) return <ProductList />; // 2. Результаты
+//     if (searchQuery) return <EmptyResults />; // 3. Ничего не найдено
+//     return <History />; // 4. По умолчанию — история
+// };
+
+// return (
+//     <div className="container">
+//         {renderContent()}
+//     </div>
+// );
 
     const query = watch("searchQuery")
 
-    const [ deboucedQuery ] = useDebounce(query , 400) || ""
+    const [ deboucedQuery ] = useDebounce(query , 400);
+    const safeDeboucedQuery = deboucedQuery || "";
 
-    const {data , isLoading} = useQuery({
-        ...searchProductsOptions(deboucedQuery) , 
-        enabled: deboucedQuery.trim().length >= 2
+    const isSearchEnabled = safeDeboucedQuery.trim().length >= 2;
+
+    const {data , isPending , isFetching} = useQuery({
+        ...searchProductsOptions(safeDeboucedQuery) , 
+        enabled: safeDeboucedQuery.trim().length >= 2
     })
 
     const handleFormSubmit = (e: React.FormEvent) => e.preventDefault();
@@ -57,7 +70,8 @@ export const SearchInput = () => {
             <SearchSuggestions
                 products = {data?.products || []}
                 isVisible = {isFocused}
-                isLoading = {isLoading}
+                isPending = {isPending && isSearchEnabled}
+                isFetching={isFetching}
             />
 
         </form>

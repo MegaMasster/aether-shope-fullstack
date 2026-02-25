@@ -1,4 +1,4 @@
-import { queryOptions } from "@tanstack/react-query";
+import { queryOptions , keepPreviousData } from "@tanstack/react-query";
 
 import { BASE_URLS } from "@/shared/api";
 import { ApiError } from "@/shared/api";
@@ -41,5 +41,6 @@ export const searchProductsOptions = (query: string) => {
         queryFn: ({ signal }) => searchProducts(query , signal) , 
         staleTime: 1 * 1000 * 60 ,
         gcTime: 15 * 1000 * 60 ,
+        placeholderData: keepPreviousData   
     })
 }
