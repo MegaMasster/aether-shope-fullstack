@@ -8,15 +8,16 @@ interface Props {
     isPending: boolean;
     isFetching: boolean;
     safeDeboucedQuery: string;
+    history: string[]
 }
 
-export const SearchSuggestions = ({products , isVisible , isPending , isFetching , safeDeboucedQuery } : Props) => {
+export const SearchSuggestions = ({products , isVisible , isPending , isFetching , safeDeboucedQuery , history} : Props) => {
 
     if (!isVisible) return null;
 
     return (
         <>
-            {products.length > 0 ? (
+            {products.length > 0 && safeDeboucedQuery.length > 0 ? (
                 <div className="absolute top-full left-0 right-0 mt-3 p-2 
                     bg-gradient-to-br from-white/40 via-zinc-200/20 to-white/30 
                     backdrop-blur-3xl border border-white/30 rounded-[32px]
@@ -29,7 +30,7 @@ export const SearchSuggestions = ({products , isVisible , isPending , isFetching
                             <div
                                 key={product.id}
                                 className={`group flex items-center justify-between px-6 py-3 
-                                hover:bg-white/50 rounded-[22px] transition-all duration-300 cursor-pointer
+                                hover:bg-white/50 rounded-[20px] transition-all duration-300 cursor-pointer
                                 ${isFetching 
                                     ? 'animate-pulse bg-white/5 pointer-events-none' 
                                     : 'opacity-100'
@@ -79,12 +80,46 @@ export const SearchSuggestions = ({products , isVisible , isPending , isFetching
                                 </p>
                             </>
                         ) : (
-                            <>
-                                <Clock size={18} strokeWidth={1.2} className="text-zinc-400" />
-                                <p className="text-zinc-500 font-light text-[11px] uppercase tracking-[0.25em]">
-                                    History is empty
-                                </p>
-                            </>
+
+                            history.length > 0 ? (
+                                <div className="w-full px-5">
+                                    <div className="flex items-center justify-between mb-2 px-2">
+                                        <p className="text-[10px] text-zinc-500 uppercase tracking-[0.25em] font-medium opacity-70">
+                                            Recent Searches
+                                        </p>
+                                    </div>
+                                    
+                                    <div className="grid grid-cols-3 gap-2">
+                                        {history.slice(0, 6).map((item) => (
+                                            <div 
+                                                key={item} 
+                                                className="group relative flex items-center gap-3 px-3 py-2
+                                                    bg-white/60 border border-white/80 rounded-2xl
+                                                    shadow-[0_4px_12px_-1px_rgba(0,0,0,0.03)]
+                                                    hover:bg-white hover:border-zinc-200 hover:shadow-[0_8px_20px_-6px_rgba(0,0,0,0.08)]
+                                                    hover:-translate-y-0.5
+                                                    transition-all duration-400 cursor-pointer overflow-hidden"
+                                            >
+
+                                                <Clock size={10} className="text-zinc-400 shrink-0 group-hover:text-zinc-600 transition-colors" />
+                                                
+                                                <span className="text-zinc-600 text-[11px] font-normal tracking-tight 
+                                                    truncate group-hover:text-zinc-900 transition-colors">
+                                                    {item}
+                                                </span>
+
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            ) : (
+                                <>
+                                    <Clock size={18} strokeWidth={1.2} className="text-zinc-400" />
+                                    <p className="text-zinc-500 font-light text-[11px] uppercase tracking-[0.25em]">
+                                        History is empty
+                                    </p>
+                                </>
+                            )
                         )}
                     </div>
 

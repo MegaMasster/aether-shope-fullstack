@@ -6,6 +6,7 @@ import React from 'react';
 
 import { searchProductsOptions } from '@/entities/product';
 import { SearchSuggestions } from './SearchSuggestions';
+import { useSearchHistoryStore } from '@/features/search-input/index';
 
 interface SearchInput {
     searchQuery: string;
@@ -13,24 +14,12 @@ interface SearchInput {
 
 export const SearchInput = () => {
 
+    const addToHistory = useSearchHistoryStore(state => state.addToHistory)
+    const history = useSearchHistoryStore(state => state.history)
+
     const [isFocused, setIsFocused] = useState(false);
 
-    const { register , watch } = useForm<SearchInput>({
-        
-    });
-
-//     const renderContent = () => {
-//     if (isLoading) return <Loader />; // 1. Загрузка
-//     if (products.length > 0) return <ProductList />; // 2. Результаты
-//     if (searchQuery) return <EmptyResults />; // 3. Ничего не найдено
-//     return <History />; // 4. По умолчанию — история
-// };
-
-// return (
-//     <div className="container">
-//         {renderContent()}
-//     </div>
-// );
+    const { register , watch } = useForm<SearchInput>();
 
     const query = watch("searchQuery")
 
@@ -44,7 +33,13 @@ export const SearchInput = () => {
         enabled: safeDeboucedQuery.trim().length >= 2
     })
 
-    const handleFormSubmit = (e: React.FormEvent) => e.preventDefault();
+    const handleFormSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+
+        if (query.trim().length >= 2) {
+            addToHistory(query)
+        }
+    }
 
     return (
         <form onSubmit={handleFormSubmit} className="relative flex p-3">
@@ -73,6 +68,7 @@ export const SearchInput = () => {
                 isPending = {isPending && isSearchEnabled}
                 isFetching={isFetching}
                 safeDeboucedQuery={safeDeboucedQuery}
+                history={history}
             />
 
         </form>
