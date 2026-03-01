@@ -1,12 +1,13 @@
 import { useForm } from 'react-hook-form';
 import { useDebounce } from 'use-debounce';
 import { useQuery } from '@tanstack/react-query';
-import { useState} from 'react';
+import { useState, useRef, useEffect} from 'react';
 import React from 'react';
 
 import { searchProductsOptions } from '@/entities/product';
 import { SearchSuggestions } from './SearchSuggestions';
 import { useSearchHistoryStore } from '@/features/search-input/index';
+import { useSearchInputStore } from '@/features/search-input/index';
 
 interface SearchInput {
     searchQuery: string;
@@ -17,9 +18,29 @@ export const SearchInput = () => {
     const addToHistory = useSearchHistoryStore(state => state.addToHistory)
     const history = useSearchHistoryStore(state => state.history)
 
-    const [isFocused, setIsFocused] = useState(false);
+    const inputQuery = useSearchInputStore(state => state.inputQuery)
 
-    const { register , watch } = useForm<SearchInput>();
+    const [isFocused, setIsFocused] = useState(false);
+    const containerRef = useRef<HTMLFormElement>(null);
+
+    const { register , watch, setValue  } = useForm<SearchInput>();
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+                setIsFocused(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+
+    useEffect(() => {
+        if (inputQuery) {
+            setValue("searchQuery", inputQuery);
+        }
+    }, [inputQuery, setValue]);
 
     const query = watch("searchQuery")
 
@@ -42,12 +63,15 @@ export const SearchInput = () => {
     }
 
     return (
-        <form onSubmit={handleFormSubmit} className="relative flex p-3">
+        <form 
+            ref={containerRef}
+            onSubmit={handleFormSubmit} 
+            className="relative flex p-3"
+        >
             <div className="relative flex items-center group">
                 <input 
                     {...register("searchQuery")}
                     onFocus={() => setIsFocused(true)}
-                    onBlur={() => setTimeout(() => setIsFocused(false), 0)} 
                     type="text" 
                     placeholder="Search..."
                     className="w-[600px] pl-8 pr-16 py-2.5 

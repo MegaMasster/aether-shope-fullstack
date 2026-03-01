@@ -2,6 +2,8 @@ import { Clock } from "lucide-react";
 import { type Product } from "@/entities/product"
 import { Search , SearchX } from "lucide-react";
 
+import { useSearchInputStore } from '@/features/search-input/index';
+
 interface Props {
     products: Product[];
     isVisible: boolean; 
@@ -13,11 +15,13 @@ interface Props {
 
 export const SearchSuggestions = ({products , isVisible , isPending , isFetching , safeDeboucedQuery , history} : Props) => {
 
+    const setInputQuery = useSearchInputStore(state => state.setInputQuery)
+
     if (!isVisible) return null;
 
     return (
         <>
-            {products.length > 0 && safeDeboucedQuery.length > 0 ? (
+            {products.length > 0 && safeDeboucedQuery.length >= 2 ? (
                 <div className="absolute top-full left-0 right-0 mt-3 p-2 
                     bg-gradient-to-br from-white/40 via-zinc-200/20 to-white/30 
                     backdrop-blur-3xl border border-white/30 rounded-[32px]
@@ -93,6 +97,7 @@ export const SearchSuggestions = ({products , isVisible , isPending , isFetching
                                         {history.slice(0, 6).map((item) => (
                                             <div 
                                                 key={item} 
+                                                onClick={() => setInputQuery(item)}
                                                 className="group relative flex items-center gap-3 px-3 py-2
                                                     bg-white/60 border border-white/80 rounded-2xl
                                                     shadow-[0_4px_12px_-1px_rgba(0,0,0,0.03)]
@@ -103,8 +108,10 @@ export const SearchSuggestions = ({products , isVisible , isPending , isFetching
 
                                                 <Clock size={10} className="text-zinc-400 shrink-0 group-hover:text-zinc-600 transition-colors" />
                                                 
-                                                <span className="text-zinc-600 text-[11px] font-normal tracking-tight 
-                                                    truncate group-hover:text-zinc-900 transition-colors">
+                                                <span 
+                                                    className="text-zinc-600 text-[11px] font-normal tracking-tight 
+                                                    truncate group-hover:text-zinc-900 transition-colors"
+                                                >
                                                     {item}
                                                 </span>
 

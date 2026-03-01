@@ -1,14 +1,14 @@
-import { queryOptions , keepPreviousData } from "@tanstack/react-query";
+import { queryOptions } from "@tanstack/react-query";
 
 import { ApiError } from "@/shared/api";
 
 import { type ProductResponse } from "../model/types";
 
-const searchProducts = async (query: string , signal: AbortSignal): Promise<ProductResponse> => {
+const getProducts = async (signal: AbortSignal): Promise<ProductResponse> => {
 
     const combinedSignal = AbortSignal.any([signal , AbortSignal.timeout(8000)])
 
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/products/search?q=${query}` , {signal: combinedSignal})
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/products?limit=5` , {signal: combinedSignal})
 
     if (!response.ok) {
         let message = "Server error"
@@ -22,7 +22,7 @@ const searchProducts = async (query: string , signal: AbortSignal): Promise<Prod
     }
 
     const successData = await response.json()
-    console.log("Searched data: " , successData)
+    console.log("Get data for promo: " , successData)
 
     return {
         products: successData.products , 
@@ -32,12 +32,10 @@ const searchProducts = async (query: string , signal: AbortSignal): Promise<Prod
     }
 }
 
-export const searchProductsOptions = (query: string) => {
+export const getProductsOptions = () => {
     return queryOptions({
-        queryKey: ["products" , "search" , query] , 
-        queryFn: ({ signal }) => searchProducts(query , signal) , 
-        staleTime: 1 * 1000 * 60 ,
-        gcTime: 15 * 1000 * 60 ,
-        placeholderData: keepPreviousData   
+        queryKey: ["products" , "promo"] ,
+        queryFn: ({ signal }) => getProducts(signal),
+        staleTime: 10 * 1000 * 60
     })
 }
