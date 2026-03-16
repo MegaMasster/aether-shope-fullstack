@@ -1,13 +1,12 @@
 import { useForm } from 'react-hook-form';
 import { useDebounce } from 'use-debounce';
 import { useQuery } from '@tanstack/react-query';
-import { useState, useRef, useEffect} from 'react';
+import { useState, useRef, useEffect } from 'react';
 import React from 'react';
 
 import { searchProductsOptions } from '@/entities/product';
 import { SearchSuggestions } from './SearchSuggestions';
-import { useSearchHistoryStore } from '@/features/search-input/index';
-import { useSearchInputStore } from '@/features/search-input/index';
+import { useSearchHistoryStore , useSearchInputStore } from '@/features/search-input/index';
 
 interface SearchInput {
     searchQuery: string;

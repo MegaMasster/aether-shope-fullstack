@@ -12,7 +12,7 @@ export const CatalogPopup = () => {
     return (
         <section 
             className="fixed inset-0 z-[100] flex items-start justify-center pt-24 px-4
-            bg-white/10 backdrop-blur-[9px] transition-all duration-500"
+            bg-white/10 backdrop-blur-[14px] transition-all duration-500"
             onClick={closeCatalog}
         >
             <div 

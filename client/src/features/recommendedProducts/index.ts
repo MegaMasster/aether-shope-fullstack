@@ -1,0 +1,1 @@
+export { RecommendProducts } from "./ui/RecommendedProducts"
