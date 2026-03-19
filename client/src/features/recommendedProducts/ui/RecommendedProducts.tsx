@@ -9,7 +9,7 @@ import { type Product } from "@/entities/product/model/types";
 export const RecommendProducts = () => {
 
     const {ref , inView} = useInView({
-        rootMargin: '100px',
+        rootMargin: '70px',
     })
 
     const { 
@@ -77,7 +77,7 @@ export const RecommendProducts = () => {
                             bg-gradient-to-br from-white/20 via-zinc-400/10 to-black/5"
                         >
                             <img 
-                                src={product.thumbnail} 
+                                src={product.images[0]} 
                                 alt={product.title}
                                 className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-500"
                             />

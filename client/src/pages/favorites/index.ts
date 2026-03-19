@@ -1,0 +1,1 @@
+export { FavoritesProductsPage as default} from "./ui/FavoritesPage";

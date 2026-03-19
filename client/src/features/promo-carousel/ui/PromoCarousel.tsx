@@ -15,7 +15,7 @@ export const PromoCarousel = () => {
     const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
 
     if (isLoading) return (
-        <div className="relative w-[65%] h-[400px] mt-10 bg-zinc-300/60 rounded-3xl overflow-hidden border border-zinc-200/50">
+        <div className="relative w-[65%] h-[400px] mt-10 bg-zinc-400/20 rounded-3xl overflow-hidden border border-zinc-200/30">
             <div className="absolute inset-0" style={{
                 background: 'linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0) 100%)',
                 backgroundSize: '200% 100%',
@@ -35,12 +35,12 @@ export const PromoCarousel = () => {
                                 <div className="max-w-[50%]">
                                     <h2 className="text-4xl font-bold text-zinc-900 mb-4">{product.title}</h2>
                                     <p className="text-zinc-600 mb-6 line-clamp-2">{product.description}</p>
-                                    <button className="px-8 py-3 bg-zinc-900 text-white rounded-full hover:bg-black transition-colors">
+                                    <button className="px-8 py-3 bg-zinc-900 text-white rounded-full hover:bg-black transition-colors hover:cursor-pointer">
                                         Buy now
                                     </button>
                                 </div>
                                 <img 
-                                    src={product.thumbnail} 
+                                    src={product.images[0]} 
                                     alt={product.title}
                                     className="h-64 object-contain drop-shadow-2xl"
                                 />

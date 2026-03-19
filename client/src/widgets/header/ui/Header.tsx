@@ -2,6 +2,7 @@ import { SearchInput } from "@/features/search-input";
 import { CatalogButton } from "@/features/catalog";
 import { CatalogPopup } from "@/features/catalog";
 import { CartButton } from "@/features/cart";
+import { FavoritiesButon } from "@/entities/product/favorites/index";
 
 export const Header = () => {
     return (
@@ -25,6 +26,7 @@ export const Header = () => {
                 shadow-[0_20px_50px_-12px_rgba(71,85,105,0.3),inset_0_1px_1px_rgba(255,255,255,0.3)]">
                 <CatalogButton />
                 <CartButton />
+                <FavoritiesButon />
             </nav>
             
             <CatalogPopup />
