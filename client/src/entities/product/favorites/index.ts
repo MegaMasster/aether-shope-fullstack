@@ -1,1 +1,0 @@
-export { FavoritiesButon } from "./ui/FavoritesButton";

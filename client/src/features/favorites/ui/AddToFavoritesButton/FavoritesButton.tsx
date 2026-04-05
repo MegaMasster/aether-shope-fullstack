@@ -1,8 +1,7 @@
 import { Heart } from 'lucide-react';
-
 import { Link } from 'react-router-dom';
 
-export const FavoritiesButon = () => {
+export const FavoritesButton = () => {
     return (
         <Link 
             to="/favorites"

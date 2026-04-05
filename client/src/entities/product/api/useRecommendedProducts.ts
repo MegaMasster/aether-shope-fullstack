@@ -34,7 +34,7 @@ const recommendedProductsPage = async ({
         products: shuffled,
         total: successData.total, 
         skip: successData.skip, 
-        limit: successData.limit
+        limit: successData.limit,
     }
 }
 

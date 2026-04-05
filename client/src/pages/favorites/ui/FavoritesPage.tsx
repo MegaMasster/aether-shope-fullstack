@@ -1,4 +1,4 @@
-import { FavoritesProducts } from "@/features/favoritesProducts";
+import { FavoritesProducts } from "@/features/favorites";
 
 export const FavoritesProductsPage = () => {
     return (

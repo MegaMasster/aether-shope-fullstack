@@ -40,7 +40,7 @@ export const PromoCarousel = () => {
                                     </button>
                                 </div>
                                 <img 
-                                    src={product.images[0]} 
+                                    src={product.thumbnail} 
                                     alt={product.title}
                                     className="h-64 object-contain drop-shadow-2xl"
                                 />

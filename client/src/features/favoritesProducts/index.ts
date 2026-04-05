@@ -1,1 +1,0 @@
-export { FavoritesProducts } from "./ui/FavoritesProducts";

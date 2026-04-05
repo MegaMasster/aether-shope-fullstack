@@ -1,6 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer"
 import { useEffect } from "react";
+import { Star } from 'lucide-react';
 
 import { getRecommendedProductsInfiniteOptions } from "@/entities/product";
 
@@ -77,7 +78,7 @@ export const RecommendProducts = () => {
                             bg-gradient-to-br from-white/20 via-zinc-400/10 to-black/5"
                         >
                             <img 
-                                src={product.images[0]} 
+                                src={product.thumbnail} 
                                 alt={product.title}
                                 className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-500"
                             />
@@ -99,6 +100,13 @@ export const RecommendProducts = () => {
                                     {product.brand}
                                 </span>
                             )}
+
+                            <p className="flex items-center gap-1 text-sm text-gray-600">
+                                <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                                <span>{product.rating}</span>
+                                <span className="text-gray-400">•</span>
+                                <span>{product.reviews.length} reviews</span>
+                            </p>
                         </div>
 
                         <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100

@@ -3,6 +3,7 @@ import { Suspense , lazy} from "react";
 
 import { ROUTES } from "@/app/routing/routes";
 import { SuspenseLoader } from "@/shared/ui";
+import { BaseLayout } from "@/app/layout/BaseLayout";
 
 const HomePage = lazy(() => import("@/pages/home"));
 const FavoritesProductsPage = lazy(() => import("@/pages/favorites"));
@@ -13,15 +14,16 @@ export const AppRouter = () => {
             <BrowserRouter>
                 <Routes>
 
-                    <Route path={ROUTES.HOME} element={ <HomePage/> } />
+                    <Route element={ <BaseLayout/> }>
 
-                    <Route path={ROUTES.PROFILE} element={ <HomePage/> } />
+                        <Route path={ROUTES.HOME} element={ <HomePage/> } />
+                        <Route path={ROUTES.FAVORITES} element={ <FavoritesProductsPage/> } />
+                        {/* <Route path={ROUTES.PROFILE} element={ <HomePage/> } /> */}
 
-                    <Route path={ROUTES.FAVORITES} element={ <FavoritesProductsPage/> } />
+                    </Route>
 
                 </Routes>
             </BrowserRouter>
         </Suspense>
     );
 }
-
