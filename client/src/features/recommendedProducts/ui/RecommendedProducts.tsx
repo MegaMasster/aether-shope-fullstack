@@ -2,6 +2,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer"
 import { useEffect } from "react";
 import { Star } from 'lucide-react';
+import { Link } from "react-router-dom";
 
 import { getRecommendedProductsInfiniteOptions } from "@/entities/product";
 
@@ -60,10 +61,11 @@ export const RecommendProducts = () => {
 
     return (
         <section className="w-[65%] mt-15 p-5">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            <article className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                 {data?.pages.flatMap(page => page.products).map((product: Product) => (
-                    <article 
+                    <Link 
                         key={product.id} 
+
                         className="group relative flex flex-col
                         bg-gradient-to-br from-white/30 via-zinc-400/15 to-black/5 
                         backdrop-blur-2xl 
@@ -73,8 +75,13 @@ export const RecommendProducts = () => {
                         transition-all duration-500
                         hover:bg-white/40 hover:border-white/40 hover:shadow-[0_20px_50px_-10px_rgba(71,85,105,0.3)]
                         p-4 pb-6 overflow-hidden hover:cursor-pointer"
+
+                        to={`/product/${product.id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
                     >
-                        <div className="relative w-full h-32 mb-3 rounded-xl overflow-hidden
+                        <div 
+                            className="relative w-full h-32 mb-3 rounded-xl overflow-hidden
                             bg-gradient-to-br from-white/20 via-zinc-400/10 to-black/5"
                         >
                             <img 
@@ -113,9 +120,9 @@ export const RecommendProducts = () => {
                             transition-opacity duration-500 pointer-events-none
                             shadow-[inset_0_1px_1px_rgba(255,255,255,0.5)]" 
                         />
-                    </article>
+                    </Link>
                 ))}
-            </div>
+            </article>
 
             <div ref={ref} className="w-full flex justify-center py-6">
                 {isFetchingNextPage && (

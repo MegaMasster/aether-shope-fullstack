@@ -1,8 +1,8 @@
-import { infiniteQueryOptions} from "@tanstack/react-query";
+import { infiniteQueryOptions } from "@tanstack/react-query";
 
 import { ApiError } from "@/shared/api";
 
-import { type ProductResponse } from "../model/types";
+import { type ProductResponse } from "../../model/types";
 
 const recommendedProductsPage = async ({ 
     pageParam = 0, 

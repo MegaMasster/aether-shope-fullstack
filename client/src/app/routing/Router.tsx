@@ -7,6 +7,7 @@ import { BaseLayout } from "@/app/layout/BaseLayout";
 
 const HomePage = lazy(() => import("@/pages/home"));
 const FavoritesProductsPage = lazy(() => import("@/pages/favorites"));
+const ProductCardPage = lazy(() => import("@/pages/productCard"));
 
 export const AppRouter = () => {
     return (
@@ -18,7 +19,7 @@ export const AppRouter = () => {
 
                         <Route path={ROUTES.HOME} element={ <HomePage/> } />
                         <Route path={ROUTES.FAVORITES} element={ <FavoritesProductsPage/> } />
-                        {/* <Route path={ROUTES.PROFILE} element={ <HomePage/> } /> */}
+                        <Route path={ROUTES.PRODUCT} element={ <ProductCardPage/> } />
 
                     </Route>
 

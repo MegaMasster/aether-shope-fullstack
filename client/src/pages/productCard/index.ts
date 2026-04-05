@@ -1,0 +1,1 @@
+export { ProductCardPage as default } from "./ui/ProductCardPage";
