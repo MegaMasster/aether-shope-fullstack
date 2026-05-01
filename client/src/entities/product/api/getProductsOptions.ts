@@ -36,6 +36,7 @@ export const getProductsOptions = () => {
     return queryOptions({
         queryKey: ["products" , "promo"] ,
         queryFn: ({ signal }) => getProducts(signal),
-        staleTime: 10 * 1000 * 60
+        staleTime: 10 * 1000 * 60,
+        gcTime: 30 * 1000 * 60
     })
 }

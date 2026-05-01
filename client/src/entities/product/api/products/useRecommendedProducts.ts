@@ -50,6 +50,7 @@ export const getRecommendedProductsInfiniteOptions  = () => {
             }
             return undefined; 
         },
-        staleTime: 5 * 1000 * 60
+        staleTime: 5 * 1000 * 60,
+        gcTime: 30 * 1000 * 60
     })
 }

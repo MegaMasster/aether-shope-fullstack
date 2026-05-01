@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Suspense , lazy} from "react";
+import { Suspense , lazy } from "react";
 
 import { ROUTES } from "@/app/routing/routes";
 import { SuspenseLoader } from "@/shared/ui";

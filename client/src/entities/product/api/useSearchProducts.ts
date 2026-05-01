@@ -37,7 +37,7 @@ export const searchProductsOptions = (query: string) => {
         queryKey: ["products" , "search" , query] , 
         queryFn: ({ signal }) => searchProducts(query , signal) , 
         staleTime: 1 * 1000 * 60 ,
-        gcTime: 15 * 1000 * 60 ,
-        placeholderData: keepPreviousData   
+        gcTime: 30 * 1000 * 60 ,
+        placeholderData: keepPreviousData
     })
 }
