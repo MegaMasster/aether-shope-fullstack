@@ -4,9 +4,11 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useCallback } from "react";
 
 import { getProductsOptions } from "@/entities/product";
+import { ErrorPromoSlide } from "@/shared/ui";
+import { PromoSlides } from "@/shared/ui/Promo/PromoSlides";
 
 export const PromoCarousel = () => {
-    const { data, isLoading } = useQuery({ ...getProductsOptions() });
+    const { data, isLoading, isError } = useQuery({ ...getProductsOptions() });
     const promoItems = data?.products || [];
 
     const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
@@ -27,44 +29,41 @@ export const PromoCarousel = () => {
 
     return (
         <section className="relative w-[65%] mt-10 group">
-            <div className="overflow-hidden rounded-3xl border border-white/20 shadow-xl" ref={emblaRef}>
-                <div className="flex">
-                    {promoItems.map((product, index) => (
-                        <div key={product.id || index} className="flex-[0_0_100%] min-w-0 h-[400px] relative bg-gradient-to-br from-white/30 via-zinc-700/15 to-black/5 ">
-                            <div className="flex h-full items-center justify-between px-16">
-                                <div className="max-w-[50%]">
-                                    <h2 className="text-4xl font-bold text-zinc-900 mb-4">{product.title}</h2>
-                                    <p className="text-zinc-600 mb-6 line-clamp-2">{product.description}</p>
-                                    <button className="px-8 py-3 bg-zinc-900 text-white rounded-full hover:bg-black transition-colors hover:cursor-pointer">
-                                        Buy now
-                                    </button>
-                                </div>
-                                <img 
-                                    src={product.thumbnail} 
-                                    alt={product.title}
-                                    className="h-64 object-contain drop-shadow-2xl"
-                                />
-                            </div>
+            {!isError ? (
+                <>
+                    <div className="overflow-hidden rounded-3xl border border-white/20 shadow-xl" ref={emblaRef}>
+                        <div className="flex">
+                            {promoItems.map((product, index) => (
+                                <PromoSlides key={product.id || index} product={product} />
+                            ))}
                         </div>
-                    ))}
-                </div>
-            </div>
+                    </div>
+                </>
+            ) : (
+                <>
+                    <ErrorPromoSlide />
+                </>
+            )}
 
-            <button 
-                onClick={scrollPrev}
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full bg-white/80 
-                backdrop-blur-md border border-zinc-200 shadow-lg opacity-0 group-hover:opacity-100 transition-all hover:bg-white hover:cursor-pointer"
-            >
-                <ChevronLeft size={20} className="text-zinc-700" />
-            </button>
+            {!isError && (
+                <>
+                    <button 
+                        onClick={scrollPrev}
+                        className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full bg-white/80 
+                        backdrop-blur-md border border-zinc-200 shadow-lg opacity-0 group-hover:opacity-100 transition-all hover:bg-white hover:cursor-pointer"
+                    >
+                        <ChevronLeft size={20} className="text-zinc-700" />
+                    </button>
 
-            <button 
-                onClick={scrollNext}
-                className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full bg-white/80 backdrop-blur-md border
-                 border-zinc-200 shadow-lg opacity-0 group-hover:opacity-100 transition-all hover:bg-white hover:cursor-pointer"
-            >
-                <ChevronRight size={20} className="text-zinc-700" />
-            </button>
+                    <button 
+                        onClick={scrollNext}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full bg-white/80 backdrop-blur-md border
+                        border-zinc-200 shadow-lg opacity-0 group-hover:opacity-100 transition-all hover:bg-white hover:cursor-pointer"
+                    >
+                        <ChevronRight size={20} className="text-zinc-700" />
+                    </button>
+                </>
+            )}
         </section>
-    );
+    )
 }
