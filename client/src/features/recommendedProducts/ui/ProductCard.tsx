@@ -3,13 +3,17 @@ import { useParams } from "react-router-dom";
 
 import { type ProductResponse } from "@/entities/product/model/types"; 
 import { fetchProductOptions } from "@/entities/product/api/products/fetch-product";
+import { ProductCardLoading } from "@/shared/ui";
+import { ProductCardError } from "@/shared/ui";
+import { ProductCardNotFound } from "@/shared/ui";
+import { ApiError } from "@/shared/api";
 
 export const ProductCard = () => {
 
     const { id } = useParams<{ id: string }>()
     const queryClient = useQueryClient();
 
-    const { data: product, isLoading, isError } = useQuery({
+    const { data: product, isLoading, isError, error } = useQuery({
         ...fetchProductOptions(id!), 
         initialData: () => {
             const product = queryClient
@@ -24,18 +28,24 @@ export const ProductCard = () => {
         enabled: !!id,
         staleTime: 5 * 60 * 1000,
     });
-    
-    if (!product) {
-        return (
-            <section className="flex w-[80%] mx-auto p-8">
-                <div className="text-center">
-                    <h2 className="text-2xl font-bold">Загрузка...</h2>
-                    <p className="text-gray-500 mt-2">Пожалуйста, подождите</p>
-                </div>
-            </section>
-        )
+
+    if (isLoading) {
+        return <ProductCardLoading />
     }
-    
+
+    if (isError || !product)  {
+
+        const apiError = error as ApiError
+
+        if (apiError.status == 404) {
+            return (
+                <ProductCardNotFound productId={id}/>
+            );
+        }
+
+        return <ProductCardError />;
+    }
+
     return (
         <section className="flex w-[80%] mx-auto p-8">
             <div className="grid grid-cols-2 gap-8">
@@ -53,5 +63,5 @@ export const ProductCard = () => {
                 </div>
             </div>
         </section>
-    )
+    );
 }
