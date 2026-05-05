@@ -8,6 +8,7 @@ import { ErrorPromoSlide } from "@/shared/ui";
 import { PromoSlides } from "@/shared/ui/Promo/PromoSlides";
 
 export const PromoCarousel = () => {
+    
     const { data, isLoading, isError } = useQuery({ ...getProductsOptions() });
     const promoItems = data?.products || [];
 
