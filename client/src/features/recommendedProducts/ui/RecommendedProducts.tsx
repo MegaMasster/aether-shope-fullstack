@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer"
 import { useEffect } from "react";
-import { Star } from 'lucide-react';
+import { Star, Heart } from 'lucide-react';
 import { Link } from "react-router-dom";
 
 import { getRecommendedProductsInfiniteOptions } from "@/entities/product";
@@ -85,6 +85,21 @@ export const RecommendProducts = () => {
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
+
+                                <button 
+                                    onClick={(e) => {
+                                        e.preventDefault(); 
+                                        e.stopPropagation();
+                                        
+                                    }}
+                                    className="absolute top-3 right-3 z-20 p-2 rounded-full 
+                                    bg-white/10 backdrop-blur-md border border-white/20 
+                                    text-zinc-400 opacity-0 group-hover:opacity-100 
+                                    transition-all hover:cursor-pointer duration-300 hover:bg-white/30 hover:text-red-500 hover:scale-110 active:scale-90"
+                                >
+                                    <Heart size={16} strokeWidth={2} />
+                                </button>
+
                                 <div 
                                     className="relative w-full h-32 mb-3 rounded-xl overflow-hidden
                                     bg-gradient-to-br from-white/20 via-zinc-400/10 to-black/5"
