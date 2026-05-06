@@ -9,6 +9,7 @@ const HomePage = lazy(() => import("@/pages/home"));
 const FavoritesProductsPage = lazy(() => import("@/pages/favorites"));
 const ProductCardPage = lazy(() => import("@/pages/productCard"));
 const NotFoundPage = lazy(() => import("@/pages/ErrorPage"));
+const CartProducts = lazy(() => import("@/pages/cart"));
 
 export const AppRouter = () => {
     return (
@@ -22,6 +23,7 @@ export const AppRouter = () => {
                         <Route path={ROUTES.FAVORITES} element={ <FavoritesProductsPage/> } />
                         <Route path={ROUTES.PRODUCT} element={ <ProductCardPage/> } />
                         <Route path="*" element={ <NotFoundPage/> } />
+                        <Route path={ROUTES.CART} element={ <CartProducts /> } />
 
                     </Route>
 
