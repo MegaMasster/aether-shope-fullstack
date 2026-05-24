@@ -1,0 +1,1 @@
+export { CategoryProductListPage as default } from "./ui/CategoryProductListPage";

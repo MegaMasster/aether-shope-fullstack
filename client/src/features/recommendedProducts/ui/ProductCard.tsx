@@ -14,23 +14,19 @@ export const ProductCard = () => {
     const { id } = useParams<{ id: string }>()
     const queryClient = useQueryClient();
 
-    const { data: product, isLoading, isError, error } = useQuery({
+    const { data: product, isPending, isError, error } = useQuery({
         ...fetchProductOptions(id!), 
-        initialData: () => {
-            const product = queryClient
-                .getQueryData<{ pages: ProductResponse[] }>(['products', 'recommended', 'infinite'])
-                ?.pages?.flatMap(page => page.products)
-                .find(p => p.id === Number(id));
-
-            return product;
-        },
-        initialDataUpdatedAt: () => 
-            queryClient.getQueryState(['products', 'recommended', 'infinite'])?.dataUpdatedAt,
+        placeholderData: () => {
+                return queryClient
+                    .getQueryData<{ pages: ProductResponse[] }>(['products', 'recommended', 'infinite'])
+                    ?.pages?.flatMap(page => page.products)
+                    .find(p => p.id === Number(id));
+            },
         enabled: !!id,
         staleTime: 5 * 60 * 1000,
     });
 
-    if (isLoading) {
+    if (isPending && !product) {
         return <ProductCardLoading />
     }
 
